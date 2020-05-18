@@ -20,6 +20,7 @@
     <Folder Include="Models\DbModels\" />
     <Folder Include="IResportory\" />
     <Folder Include="Resportory\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 
