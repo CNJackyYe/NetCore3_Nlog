@@ -87,6 +87,7 @@ namespace Nlog4.Middlewares
         }
     }
 
+
     public static class RequestLoggerMiddlewareExtensions
     {
         public static IApplicationBuilder UseRequestLogger(this IApplicationBuilder builder)

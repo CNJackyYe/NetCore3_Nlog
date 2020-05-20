@@ -12,6 +12,7 @@ namespace Nlog4.Models.HelpModels
         public object ResponseBody { get; set; }
         public DateTime ExcuteStartTime { get; set; }
         public DateTime ExcuteEndTime { get; set; }
+
         public override string ToString()
         {
             var res = JsonConvert.SerializeObject(new RequestLoggerFormat
@@ -21,7 +22,11 @@ namespace Nlog4.Models.HelpModels
                 ExcuteEndTime = this.ExcuteStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
                 ExcuteStartTime= this.ExcuteEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")
             });
-
+            res = res.Replace("\"{", "{");
+            res = res.Replace("}\"", "}");
+            res = res.Replace("\"[", "[");
+            res = res.Replace("]\"", "]");
+            res = res.Replace("\\\"", "\"");
             return res;
         }
 
