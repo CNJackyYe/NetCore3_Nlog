@@ -15,6 +15,11 @@ namespace Nlog4
         public static void Main(string[] args)
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
+#if DEBUG
+            logger = NLog.Web.NLogBuilder.ConfigureNLog("nlogdev.config").GetCurrentClassLogger();
+#endif
+
             try
             {
                 logger.Debug("≥ı ºªØ≥Ã–Ú");
