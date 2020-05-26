@@ -27,6 +27,7 @@ namespace Nlog4.Models.HelpModels
             res = res.Replace("\"[", "[");
             res = res.Replace("]\"", "]");
             res = res.Replace("\\\"", "\"");
+            res = res.Replace("\\r\\n", "");
             return res;
         }
 

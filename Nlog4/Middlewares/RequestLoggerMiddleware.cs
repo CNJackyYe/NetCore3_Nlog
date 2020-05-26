@@ -43,7 +43,7 @@ namespace Nlog4.Middlewares
 
                 var stream = req.Body;
                 byte[] buffer = new byte[req.ContentLength.Value];
-                stream.Read(buffer, 0, buffer.Length);
+                stream.ReadAsync(buffer, 0, buffer.Length);
                 _logger.RequestBody = Encoding.UTF8.GetString(buffer);
 
                 req.Body.Position = 0;
@@ -67,7 +67,7 @@ namespace Nlog4.Middlewares
 
                 _nlog.LogInformation(_logger.ToString());
 
-                await resBody.CopyToAsync(resStream);
+                resBody.CopyToAsync(resStream);
             }
 
         }
