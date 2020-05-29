@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace Nlog4.Models.HelpModels
 {
     public class RequestLogger
     {
+        private readonly IHttpContextAccessor _accessor;
+        public RequestLogger(IHttpContextAccessor accessor)
+        {
+            _accessor = accessor;
+        }
         public object RequestBody { get; set; }
         public object ResponseBody { get; set; }
         public DateTime ExcuteStartTime { get; set; }
         public DateTime ExcuteEndTime { get; set; }
+        public string UserIP { get; set; }
 
         public override string ToString()
         {
@@ -20,7 +24,8 @@ namespace Nlog4.Models.HelpModels
                 RequestBody = this.RequestBody,
                 ResponseBody = this.ResponseBody,
                 ExcuteEndTime = this.ExcuteStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                ExcuteStartTime= this.ExcuteEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")
+                ExcuteStartTime = this.ExcuteEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                UserIP = _accessor.HttpContext.Connection.RemoteIpAddress.ToString()
             });
             res = res.Replace("\"{", "{");
             res = res.Replace("}\"", "}");
@@ -38,6 +43,7 @@ namespace Nlog4.Models.HelpModels
             public object ResponseBody { get; set; }
             public string ExcuteStartTime { get; set; }
             public string ExcuteEndTime { get; set; }
+            public string UserIP { get; set; }
         }
     }
 

@@ -10,20 +10,22 @@ using System.IO;
 
 namespace Nlog4.Middlewares
 {
+    /// <summary>
+    /// 请求日志中间件
+    /// </summary>
     public class RequestLoggerMiddleware
     {
-        /// <summary>
-        /// 中间件回路
-        /// </summary>
+
         private readonly RequestDelegate _next;
         private readonly ILogger<RequestLoggerMiddleware> _nlog;
+        private readonly IHttpContextAccessor _accessor;
         private RequestLogger _logger;
 
-
-        public RequestLoggerMiddleware(RequestDelegate next, ILogger<RequestLoggerMiddleware> nlog)
+        public RequestLoggerMiddleware(RequestDelegate next, ILogger<RequestLoggerMiddleware> nlog, IHttpContextAccessor accessor)
         {
             _next = next;
             _nlog = nlog;
+            _accessor = accessor;
         }
 
         /// <summary>
@@ -31,9 +33,9 @@ namespace Nlog4.Middlewares
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(Microsoft.AspNetCore.Http.HttpContext context)
         {
-            _logger = new RequestLogger();
+            _logger = new RequestLogger(_accessor);
             HttpRequest req = context.Request;
             _logger.ExcuteStartTime = DateTime.Now;
 
